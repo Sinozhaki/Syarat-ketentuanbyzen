@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syarat & ketentuan sewa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Menambahkan Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            /* Menghapus overflow: hidden agar bisa di-scroll */
+            background-color: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+        }
+        #fairy-lights-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none; /* Mencegah canvas menangkap event mouse/scroll */
+        }
+        .fog-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .fog {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0;
+            animation: drift linear infinite;
+        }
+        .fog-1 { width: 400px; height: 400px; bottom: -200px; left: 10%; animation-duration: 45s; animation-delay: -5s; }
+        .fog-2 { width: 500px; height: 500px; top: -250px; right: 15%; animation-duration: 60s; }
+        .fog-3 { width: 300px; height: 300px; bottom: -150px; right: -10%; animation-duration: 75s; animation-delay: -15s; }
+
+        @keyframes drift {
+            0% { transform: translateX(-150px) translateY(20px) scale(0.9); opacity: 0; }
+            25% { opacity: 0.6; }
+            50% { transform: translateX(150px) translateY(-20px) scale(1.1); }
+            75% { opacity: 0.6; }
+            100% { transform: translateX(-150px) translateY(20px) scale(0.9); opacity: 0; }
+        }
+
+        .info-card {
+            background: rgba(17, 24, 39, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            color: #e5e7eb;
+            max-width: 95vw;
+            width: 500px;
+            box-shadow: 0 0 40px rgba(192, 132, 252, 0.15);
+        }
+        
+        .menu-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .menu-btn.active {
+            color: white;
+        }
+        .menu-btn:not(.active):hover {
+            color: #d1d5db;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem; /* 8px */
+            padding: 0.5rem 1rem; /* 8px 16px */
+            font-size: 0.875rem; /* 14px */
+            font-weight: 500;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-900">
+
+    <!-- Latar Belakang Animasi -->
+    <div class="fog-container">
+        <div class="fog fog-1"></div>
+        <div class="fog fog-2"></div>
+        <div class="fog fog-3"></div>
+    </div>
+    <canvas id="fairy-lights-canvas"></canvas>
+
+    <!-- Layar Selamat Datang (Welcome Screen) -->
+    <div id="welcome-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/50 backdrop-blur-lg transition-opacity duration-700 ease-in-out">
+        <div class="text-center text-white">
+            <h1 class="text-4xl font-light tracking-widest">Selamat Datang</h1>
+            <p class="text-purple-300 mt-2">di Laman Sewa by Zen</p>
+            <button id="continue-btn" class="mt-8 px-8 py-3 bg-purple-600/50 border border-purple-500 rounded-full text-lg font-semibold hover:bg-purple-600/80 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-purple-900/50">
+                Lanjutkan
+            </button>
+        </div>
+    </div>
+
+    <!-- Konten Utama (Awalnya tersembunyi) -->
+    <div id="main-content" class="relative z-10 w-full min-h-screen overflow-y-auto flex flex-col items-center justify-start py-12 px-4 transition-opacity duration-700 ease-in-out opacity-0 pointer-events-none">
+        
+        <div class="info-card p-8 mt-8 mb-8">
+            <header class="text-center mb-8">
+                <h1 class="text-2xl font-light text-white tracking-widest uppercase">
+                    DETAIL SEWA BY ZEN
+                </h1>
+                
+                <div class="relative mt-6 flex justify-center gap-8" id="menu-container">
+                    <button id="detail-btn" class="menu-btn active">Detail</button>
+                    <button id="jadwal-btn" class="menu-btn">Jadwal</button>
+                    <div id="underline" class="absolute bottom-[-2px] h-[2px] bg-purple-400 rounded-full transition-all duration-300 ease-in-out"></div>
+                </div>
+
+                <div class="w-24 h-px mt-6 mx-auto bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
+            </header>
+
+            <div id="content-container">
+                <!-- Konten Detail -->
+                <div id="detail-content" class="space-y-6">
+                     <div>
+                        <h2 class="text-lg font-semibold text-white flex items-center gap-3 mb-4"><i class="fa-solid fa-list-check text-purple-300"></i>Kriteria</h2>
+                        <ul class="text-gray-300 space-y-2 pl-9 text-sm">
+                            <li>Minimal Pembuatan <b>Mei 2024</b></li>
+                            <li>Minimal Koneksi <b>20</b></li>
+                        </ul>
+                        <p class="text-xs text-gray-400 mt-3 pl-9"><b>Nb:</b> Silahkan GB koneksi jika belum memenuhi syarat.</p>
+                        <!-- Tombol Kontak & Grup -->
+                        <div class="mt-4 pl-9 flex flex-col items-start gap-3">
+                            <a href="https://wa.me/62859106914815" target="_blank" rel="noopener noreferrer" class="contact-btn text-white bg-green-500/20 border border-green-500/30 hover:bg-green-500/40">
+                                <i class="fa-brands fa-whatsapp text-base"></i>
+                                Kontak Admin
+                            </a>
+                            <a href="https://chat.whatsapp.com/BX7xSGk5dAqIQShBncKHSR" target="_blank" rel="noopener noreferrer" class="contact-btn text-white bg-purple-500/20 border border-purple-500/30 hover:bg-purple-500/40">
+                                <i class="fa-solid fa-users text-base"></i>
+                                Grup GB 1
+                            </a>
+                             <a href="https://chat.whatsapp.com/JpiLxKM0WUfByZEOaobHRz?mode=ems_copy_t" target="_blank" rel="noopener noreferrer" class="contact-btn text-white bg-purple-500/20 border border-purple-500/30 hover:bg-purple-500/40">
+                                <i class="fa-solid fa-users text-base"></i>
+                                Grup GB 2
+                            </a>
+                        </div>
+                    </div>
+                    <hr class="border-white/10">
+                    <div>
+                        <h2 class="text-lg font-semibold text-white flex items-center gap-3 mb-4"><i class="fa-solid fa-wallet text-purple-300"></i>Payment</h2>
+                        <ul class="text-gray-300 space-y-3 pl-9 text-sm">
+                            <li><b class="font-bold text-lg text-white mr-2">$10</b> jika akun aman hingga Rabu malam.</li>
+                            <li><b class="font-bold text-lg text-white mr-2">$15</b> jika akun terkena batas & berhasil dibuka.</li>
+                            <li><b class="font-bold text-lg text-white mr-2">$1/day</b> jika akun terkena batas & gagal dibuka.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Konten Jadwal (tersembunyi) -->
+                <div id="jadwal-content" class="hidden space-y-6">
+                    <div>
+                        <h2 class="text-lg font-semibold text-white flex items-center gap-3 mb-4"><i class="fa-solid fa-clock-rotate-left text-purple-300"></i>Jadwal Setor Akun</h2>
+                        <ul class="text-gray-300 space-y-2 pl-9 text-sm">
+                            <li><b>Kamis</b> Sampai <b>Selasa</b></li>
+                            <li>Jam <b>8 Malam</b> Sampai <b>6 Pagi</b></li>
+                        </ul>
+                    </div>
+                    <hr class="border-white/10">
+                    <div>
+                        <h2 class="text-lg font-semibold text-white flex items-center gap-3 mb-4"><i class="fa-solid fa-money-bill-wave text-purple-300"></i>Jadwal Gajian</h2>
+                        <ul class="text-gray-300 space-y-2 pl-9 text-sm">
+                            <li><b>Rabu / Kamis</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Elemen Audio -->
+    <audio id="audio-detail" src="detail.mp3" preload="auto"></audio>
+    <audio id="audio-jadwal" src="jadwal.mp3" preload="auto"></audio>
+
+    <script>
+        // --- SCRIPT UNTUK ANIMASI LATAR BELAKANG ---
+        const canvas = document.getElementById('fairy-lights-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+
+        const colors = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff'];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * 0.8 - 0.4;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.baseAngle = Math.random() * 360;
+                this.angle = this.baseAngle;
+                this.angleSpeed = Math.random() * 0.02 - 0.01;
+            }
+            update() {
+                this.angle += this.angleSpeed;
+                this.x += Math.sin(this.angle) * 0.4 + this.speedX;
+                this.y += Math.cos(this.angle) * 0.4 + this.speedY;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            const numberOfParticles = (canvas.width * canvas.height) / 10000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        init();
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            init();
+        });
+
+        // --- SCRIPT UNTUK FUNGSI WELCOME SCREEN & KONTEN UTAMA ---
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const continueBtn = document.getElementById('continue-btn');
+        const mainContent = document.getElementById('main-content');
+        const audioDetail = document.getElementById('audio-detail');
+        const audioJadwal = document.getElementById('audio-jadwal');
+        
+        continueBtn.addEventListener('click', () => {
+            audioDetail.play().catch(error => console.log("Autoplay ditolak oleh browser. Diperlukan interaksi pengguna."));
+            welcomeScreen.classList.add('opacity-0', 'pointer-events-none');
+            mainContent.classList.remove('opacity-0', 'pointer-events-none');
+        });
+
+
+        // --- SCRIPT UNTUK FUNGSI TOMBOL MENU & AUDIO ---
+        const detailBtn = document.getElementById('detail-btn');
+        const jadwalBtn = document.getElementById('jadwal-btn');
+        const detailContent = document.getElementById('detail-content');
+        const jadwalContent = document.getElementById('jadwal-content');
+        const underline = document.getElementById('underline');
+
+        function updateUnderlinePosition(activeButton) {
+            underline.style.width = `${activeButton.offsetWidth}px`;
+            underline.style.left = `${activeButton.offsetLeft}px`;
+        }
+
+        window.addEventListener('load', () => updateUnderlinePosition(detailBtn));
+        window.addEventListener('resize', () => {
+             const currentActive = document.querySelector('.menu-btn.active');
+             if(currentActive) updateUnderlinePosition(currentActive);
+        });
+
+        detailBtn.addEventListener('click', () => {
+            detailContent.classList.remove('hidden');
+            jadwalContent.classList.add('hidden');
+            detailBtn.classList.add('active');
+            jadwalBtn.classList.remove('active');
+            updateUnderlinePosition(detailBtn);
+
+            audioJadwal.pause();
+            audioJadwal.currentTime = 0;
+            audioDetail.play();
+        });
+
+        jadwalBtn.addEventListener('click', () => {
+            jadwalContent.classList.remove('hidden');
+            detailContent.classList.add('hidden');
+            jadwalBtn.classList.add('active');
+            detailBtn.classList.remove('active');
+            updateUnderlinePosition(jadwalBtn);
+
+            audioDetail.pause();
+            audioDetail.currentTime = 0;
+            audioJadwal.play();
+        });
+    </script>
+</body>
+</html>
+
