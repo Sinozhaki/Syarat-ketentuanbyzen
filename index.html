@@ -2,677 +2,362 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sewa LinkedIn Zen</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rent Linkedin Zen</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+    
     <style>
-        /* --- DARK THEME PALETTE --- */
-        :root {
-            --bg-page: #0F172A;       
-            --bg-card: #1E293B;       
-            --bg-chat: #0B1120; /* Lebih gelap untuk area chat */
-            --bg-input: #334155;      
-            --primary: #3B82F6;       
-            --primary-dark: #2563EB;
-            --primary-glow: rgba(59, 130, 246, 0.5);
-            --text-main: #F8FAFC;     
-            --text-sub: #94A3B8;      
-            --border-color: #334155;  
-            --gradient-text: linear-gradient(135deg, #60A5FA 0%, #38BDF8 100%);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
+        /* --- 1. GLOBAL RESET --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-page);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: var(--text-main);
-            padding: 20px;
-            padding-bottom: 60px;
-            overflow-x: hidden;
-            position: relative;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #09090b; color: #f4f4f5; padding: 0;
+            display: flex; justify-content: center; align-items: flex-start;
         }
 
-        /* --- ANIMASI BACKGROUND: DIGITAL GRID --- */
-        .digital-grid {
-            position: fixed; bottom: -30%; left: -50%; width: 200%; height: 100%;
-            background-image: linear-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.15) 1px, transparent 1px);
-            background-size: 50px 50px; transform: perspective(300px) rotateX(70deg);
-            animation: moveGrid 3s linear infinite; z-index: -1; pointer-events: none;
-            mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 60%);
-            -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 60%);
-        }
-        .horizon-glow {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; height: 100vh;
-            background: radial-gradient(circle at center bottom, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
-            z-index: -2; pointer-events: none;
-        }
-        @keyframes moveGrid { 0% { background-position: 0 0; } 100% { background-position: 0 50px; } }
-
-        /* Container */
-        .app-container {
-            background-color: var(--bg-card); width: 100%; max-width: 400px; padding: 40px 24px; /* Padding samping dikurangi dikit */
-            border-radius: 24px; box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5); text-align: center;
-            border: 1px solid var(--border-color); position: relative; z-index: 10; backdrop-filter: blur(5px);
+        /* --- 2. BACKGROUND --- */
+        .bg-glow {
+            position: fixed; top: -20%; left: 50%; transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 119, 181, 0.15) 0%, transparent 70%);
+            z-index: -1; pointer-events: none;
         }
 
-        h1 { 
-            color: var(--primary); font-size: 26px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px;
-            animation: textPulseBlue 2.5s ease-in-out infinite alternate;
-        }
-        @keyframes textPulseBlue {
-            0% { text-shadow: 0 0 5px rgba(59, 130, 246, 0.5), 0 0 10px rgba(59, 130, 246, 0.2); }
-            100% { text-shadow: 0 0 10px rgba(59, 130, 246, 1), 0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.5); color: #60A5FA; }
-        }
-        .description { color: var(--text-sub); font-size: 14px; line-height: 1.6; margin-bottom: 30px; }
-        .highlight { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
-        .separator { height: 1px; background-color: var(--border-color); border: none; margin: 25px 0; width: 100%; }
+        /* --- 3. CONTAINER --- */
+        .main-container { width: 100%; max-width: 480px; padding: 20px; display: flex; flex-direction: column; gap: 0; }
 
-        /* Accordion */
-        details { background-color: #1E293B; border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 15px; overflow: hidden; transition: all 0.3s ease; text-align: left; }
-        details[open] { border-color: var(--primary); background-color: #0F172A; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1); }
-        summary { padding: 16px; font-weight: 600; font-size: 14px; color: var(--text-main); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; letter-spacing: 0.5px; }
-        summary::-webkit-details-marker { display: none; }
-        summary::after { content: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%2394A3B8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>'); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        details[open] summary::after { transform: rotate(180deg); content: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%233B82F6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>'); }
-        .details-content { padding: 0 16px 16px 16px; transform-origin: top; animation: springDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        @keyframes springDown { 0% { opacity: 0; transform: translateY(-15px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        /* --- 4. SEPARATOR STYLE --- */
+        .section-row { padding: 25px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); width: 100%; }
+        .section-row:first-child { padding-top: 10px; border-bottom: none; text-align: center; }
+        .section-row:last-child { border-bottom: none; }
+
+        /* --- 5. CONTENT STYLES --- */
+        .logo-container { width: 70px; height: 70px; margin: 0 auto 15px auto; border-radius: 50%; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .logo-img { width: 100%; height: 100%; object-fit: cover; }
+        .title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 5px; }
+        .subtitle { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; color: #a1a1aa; font-weight: 400; }
+
+        .price-section { text-align: center; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .price-label { display: inline-block; background: rgba(0, 119, 181, 0.1); color: #38bdf8; font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 20px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .price-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 42px; font-weight: 800; color: #ffffff; letter-spacing: -1px; }
+        .price-sub { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; color: #71717a; margin-top: 5px; }
+
+        .section-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; color: #ffffff; margin-bottom: 15px; }
+        .list-item { display: flex; align-items: center; font-size: 14px; color: #d4d4d8; margin-bottom: 12px; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .icon-wrap { width: 20px; margin-right: 12px; display: flex; justify-content: center; }
+        .icon-wrap svg { width: 16px; height: 16px; stroke: #71717a; stroke-width: 2; }
         
-        ul { list-style: none; }
-        li { font-size: 14px; color: var(--text-sub); margin-bottom: 10px; display: flex; align-items: flex-start; }
-        li::before { content: ""; display: inline-block; min-width: 6px; height: 6px; background-color: var(--primary); margin-right: 12px; margin-top: 7px; border-radius: 50%; box-shadow: 0 0 8px var(--primary); }
+        .payment-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .pay-label { color: #a1a1aa; } .pay-val { color: white; font-weight: 500; } .pay-val.highlight { color: #38bdf8; }
 
-        .warning-box { margin-top: 15px; padding: 12px; background-color: rgba(220, 38, 38, 0.1); border-left: 3px solid #EF4444; border-radius: 6px; font-size: 13px; color: #EF4444; line-height: 1.4; }
-        .form-image-container { margin-top: 15px; border: 1px solid var(--border-color); padding: 8px; border-radius: 10px; background-color: var(--bg-page); }
-        .form-image-container img { width: 100%; height: auto; display: block; border-radius: 6px; object-fit: cover; opacity: 0.9; }
-        .example-visuals { margin-top: 20px; display: flex; flex-direction: column; gap: 20px; }
-        .svg-container { background-color: var(--bg-page); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; overflow: hidden; }
-        .svg-label { font-size: 12px; color: var(--primary); margin-bottom: 10px; font-weight: 700; display: block; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
-        .svg-container svg { width: 100%; height: auto; display: block; border-radius: 6px; background-color: #F1F5F9; box-shadow: 0 2px 8px rgba(0,0,0,0.2); border: 1px solid var(--border-color); }
+        /* Warning List */
+        .warning-list { list-style: none; padding: 0; margin: 0; }
+        .warning-item { position: relative; padding-left: 15px; margin-bottom: 8px; color: #fbbf24; font-size: 13px; line-height: 1.5; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .warning-item::before { content: "•"; position: absolute; left: 0; color: #d97706; font-weight: bold; }
+        .warning-title { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; color: #d97706; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .usage-text { font-size: 14px; color: #a1a1aa; line-height: 1.6; margin-bottom: 20px; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* --- STYLE CHAT UI KHUSUS --- */
-        .chat-section {
-            margin-top: 30px;
-            margin-bottom: 30px;
-            text-align: left;
-            background-color: var(--bg-chat); /* Background area chat */
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            height: 500px; /* Tinggi fix biar scrollable di dalam */
+        /* --- REFERRAL TABLE STYLES --- */
+        .referral-box { background: #1b1f23; border-radius: 8px; border: 1px solid #31363b; overflow: hidden; margin-top: 10px; }
+        .ref-table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .ref-table th { background: #23272e; text-align: left; padding: 12px 16px; color: #a1a1aa; font-weight: 600; border-bottom: 1px solid #31363b; }
+        .ref-table td { padding: 12px 16px; border-bottom: 1px solid #31363b; color: #e9e9eb; }
+        .ref-table tr:last-child td { border-bottom: none; }
+        .ref-val { text-align: right; font-weight: 700; color: #47b664; }
+        .row-highlight { background: rgba(251, 191, 36, 0.08); }
+        .row-highlight td { color: #fbbf24; }
+        .row-highlight .ref-val { color: #fbbf24; }
+        .rate-badge { display: inline-block; background: #fbbf24; color: #000; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; margin-left: 6px; text-transform: uppercase; }
+
+        /* --- BANK LOGOS GRID (FIXED) --- */
+        .payment-logos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
+        .pay-card {
+            background: #1b1f23; border: 1px solid #31363b; border-radius: 6px; height: 36px;
+            display: flex; align-items: center; justify-content: center; padding: 0;
+            transition: border-color 0.2s; overflow: hidden;
         }
-
-        .chat-header {
-            padding: 15px;
-            background-color: #1E293B;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .pay-card:hover { border-color: #52525b; }
         
-        .chat-title-group { display: flex; flex-direction: column; }
-        .chat-title { font-size: 14px; font-weight: 700; color: #F8FAFC; }
-        .chat-subtitle { font-size: 11px; color: var(--primary); }
-
-        .chat-body {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            background-image: radial-gradient(#1E293B 1px, transparent 1px);
-            background-size: 20px 20px;
+        .pay-svg { width: 100%; height: 100%; }
+        .logo-text { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-weight: 800; 
+            font-size: 13px; 
+            fill: #e4e4e7; 
+            text-anchor: middle; 
+            dominant-baseline: central; 
         }
+
+        /* --- LN PROFILE MOCKUP --- */
+        .ln-card { background: #1b1f23; border-radius: 8px; overflow: hidden; border: 1px solid #31363b; font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin-bottom: 15px; }
+        .ln-banner { height: 60px; background: linear-gradient(to right, #0077b5, #00a0dc); position: relative; }
+        .ln-avatar-real { width: 64px; height: 64px; background: #333; border: 3px solid #1b1f23; border-radius: 50%; position: absolute; bottom: -32px; left: 16px; }
+        .ln-body { padding: 40px 16px 16px 16px; }
+        .ln-skele { background: #31363b; border-radius: 4px; }
+        .ln-name { width: 50%; height: 16px; margin-bottom: 10px; }
+        .ln-headline { width: 90%; height: 10px; margin-bottom: 8px; opacity: 0.8; }
+        .ln-loc { width: 35%; height: 10px; margin-bottom: 16px; opacity: 0.6; }
         
-        /* Scrollbar Chat */
-        .chat-body::-webkit-scrollbar { width: 4px; }
-        .chat-body::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 4px; }
+        .ln-actions { display: flex; gap: 8px; margin-bottom: 24px; }
+        .ln-btn { border-radius: 50px; padding: 6px 16px; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: 1; height: 36px; }
+        .ln-btn-blue { background: #70b5f9; color: #000000; border: none; }
+        .ln-btn-outline { background: transparent; border: 1px solid #70b5f9; color: #70b5f9; }
+        .ln-btn-more { width: 36px; height: 36px; flex: none; border-radius: 50%; border: 1px solid #ffffff60; display: flex; align-items: center; justify-content: center; color: #ffffff80; }
 
-        /* Chat Bubble Style */
-        .chat-bubble-container {
-            display: flex;
-            gap: 10px;
-            animation: fadeIn 0.3s ease;
-            max-width: 90%;
-        }
+        .ln-analytics-box { background: #23272e; border-radius: 8px; padding: 16px; }
+        .ln-ana-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+        .ln-ana-title-group { display: flex; flex-direction: column; }
+        .ln-ana-title { font-size: 14px; font-weight: 600; color: #e9e9eb; line-height: 1.2; }
+        .ln-ana-subtitle { font-size: 12px; color: #ffffff90; margin-top: 2px; }
+        .ln-chevron { color: #ffffff60; }
+        .ln-stat-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #31363b; }
+        .ln-stat-row:last-child { padding-bottom: 0; border-bottom: none; }
+        .ln-stat-row:first-of-type { padding-top: 0; }
+        .ln-stat-left { display: flex; align-items: flex-start; gap: 12px; }
+        .ln-stat-icon-wrap { color: #ffffff90; padding-top: 2px; }
+        .ln-stat-data { display: flex; flex-direction: column; }
+        .ln-stat-num { font-size: 16px; font-weight: 600; color: #e9e9eb; line-height: 1.1; }
+        .ln-stat-label { font-size: 12px; color: #ffffff90; margin-top: 4px; }
+        .ln-growth { font-size: 12px; color: #47b664; font-weight: 400; display: flex; align-items: center; margin-top: 6px; }
+        .ln-growth svg { margin-right: 4px; fill: currentColor; }
+        .ln-sparkline-wrap { width: 70px; height: 30px; display: flex; align-items: center; }
+        .ln-sparkline { width: 100%; height: 100%; overflow: visible; }
+        .spark-line-jagged { fill: none; stroke: #47b664; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .spark-bar { fill: #70b5f9; }
 
-        .chat-avatar {
-            width: 32px; height: 32px; border-radius: 50%;
-            background-color: var(--primary-dark);
-            color: white; font-weight: 700; font-size: 12px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; border: 1px solid var(--border-color);
-        }
+        /* --- LN POST MOCKUP --- */
+        .ln-post-card { background: #1b1f23; border-radius: 8px; border: 1px solid #31363b; padding: 12px 0 4px 0; font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .post-header { display: flex; align-items: center; padding: 0 16px 8px 16px; position: relative; }
+        .post-avatar { width: 40px; height: 40px; background: #333; border-radius: 50%; margin-right: 10px; }
+        .post-meta { display: flex; flex-direction: column; }
+        .post-name { font-size: 14px; font-weight: 600; color: #e9e9eb; }
+        .post-info { font-size: 12px; color: #a1a1aa; margin-top: 2px; display: flex; align-items: center; }
+        .post-dot { margin: 0 4px; }
+        .post-globe svg { width: 12px; height: 12px; fill: #a1a1aa; margin-left: 4px; }
+        .post-menu { position: absolute; right: 16px; top: 0; color: #a1a1aa; font-weight: bold; font-size: 20px; }
+        .post-text { padding: 4px 16px 12px 16px; font-size: 14px; color: #e9e9eb; line-height: 1.5; }
+        .post-hashtag { color: #70b5f9; font-weight: 400; }
+        .post-media { width: 100%; height: 180px; background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; border-top: 1px solid #31363b; border-bottom: 1px solid #31363b; }
+        .media-shape { position: absolute; border-radius: 50%; filter: blur(40px); opacity: 0.4; }
+        .s1 { width: 100px; height: 100px; background: #0077b5; top: 20%; left: 20%; }
+        .s2 { width: 150px; height: 150px; background: #70b5f9; bottom: 10%; right: 10%; }
+        .media-content { z-index: 2; text-align: center; }
+        .media-title { font-size: 20px; font-weight: 800; color: white; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .media-sub { font-size: 10px; background: #0077b5; color: white; padding: 4px 10px; border-radius: 4px; font-weight: 700; letter-spacing: 1px; display: inline-block; }
+        .post-stats { padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #31363b; }
+        .stats-left { display: flex; align-items: center; font-size: 11px; color: #a1a1aa; }
+        .stat-icon-stack { display: flex; margin-right: 6px; }
+        .reaction-icon { width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #1b1f23; margin-left: -4px; }
+        .reaction-icon:first-child { margin-left: 0; }
+        .bg-like { background: #70b5f9; } .bg-love { background: #f25c55; } .bg-idea { background: #f5bb5c; }
+        .reaction-icon svg { width: 8px; height: 8px; fill: white; }
+        .post-actions { display: flex; justify-content: space-between; padding: 4px 8px; }
+        .action-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0; border-radius: 4px; color: #a1a1aa; cursor: pointer; }
+        .action-btn:active { background: #ffffff10; }
+        .action-icon { margin-bottom: 4px; }
+        .action-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+        .action-label { font-size: 10px; font-weight: 600; }
 
-        .chat-bubble {
-            background-color: #1E293B;
-            padding: 10px 12px;
-            border-radius: 0 12px 12px 12px; /* Sudut kiri atas lancip */
-            position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            border: 1px solid var(--border-color);
-        }
 
-        .bubble-name { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 2px; display: block; }
-        .bubble-text { font-size: 13px; color: #E2E8F0; line-height: 1.4; word-wrap: break-word; }
-        .bubble-time { font-size: 9px; color: #64748B; text-align: right; margin-top: 4px; display: block; }
-        
-        .chat-image { margin-top: 8px; max-width: 150px; border-radius: 8px; border: 1px solid var(--border-color); cursor: pointer; }
+        .cta-container { padding-top: 20px; }
+        .btn-wa { background: #fff; color: #000; width: 100%; text-decoration: none; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; border-radius: 12px; padding: 16px; transition: opacity 0.2s; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .btn-wa:active { opacity: 0.8; }
+        .btn-icon { width: 20px; height: 20px; margin-right: 8px; }
 
-        /* --- CHAT INPUT BAR (FORM) --- */
-        .chat-input-area {
-            padding: 10px;
-            background-color: #1E293B;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        #formClosedMsg { font-size: 11px; color: #EF4444; text-align: center; padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: 8px; }
-
-        .chat-inputs-row { display: flex; gap: 8px; }
-        
-        .chat-input {
-            background-color: #0F172A;
-            border: 1px solid var(--border-color);
-            color: white;
-            padding: 10px;
-            border-radius: 20px;
-            font-size: 13px;
-            outline: none;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        .input-name { width: 30%; }
-        .input-msg { flex: 1; }
-        
-        .chat-actions { display: flex; justify-content: space-between; align-items: center; padding: 0 5px; }
-        
-        .btn-attach {
-            background: none; border: none; cursor: pointer; color: #94A3B8; display: flex; align-items: center; gap: 5px; font-size: 11px;
-        }
-        .btn-attach:hover { color: var(--primary); }
-        .btn-attach svg { width: 20px; height: 20px; }
-
-        .btn-send {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            width: 35px; height: 35px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .btn-send:hover { background-color: var(--primary-dark); transform: scale(1.1); }
-        .btn-send:disabled { background-color: #475569; transform: none; }
-        .btn-send svg { width: 18px; height: 18px; transform: translateX(2px); } /* Icon pesawat */
-
-        #inputImage { display: none; }
-        #fileNameDisplay { font-size: 10px; color: var(--primary); margin-left: 5px; }
-
-        /* Admin & Skeleton */
-        .admin-controls { display: flex; gap: 5px; margin-top: 5px; justify-content: flex-end; }
-        .btn-mini { padding: 3px 6px; font-size: 9px; border-radius: 4px; border: none; cursor: pointer; font-weight: 600; color: white; opacity: 0.8; }
-        .btn-mini:hover { opacity: 1; }
-        .btn-edit { background-color: #D97706; }
-        .btn-delete { background-color: #DC2626; }
-
-        .admin-trigger { margin-top: 40px; font-size: 11px; color: #475569; cursor: pointer; text-decoration: underline; }
-        .admin-panel { margin-top: 15px; padding: 15px; background-color: #0F172A; border: 1px solid var(--border-color); border-radius: 10px; display: none; }
-        .admin-btn { width: 100%; padding: 10px; margin-bottom: 8px; border: none; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; }
-        .btn-open { background-color: #059669; color: white; }
-        .btn-close { background-color: #475569; color: white; }
-        .btn-logout { background-color: #7F1D1D; color: white; margin-top: 5px; }
-        
-        .skeleton-bubble { display: flex; gap: 10px; margin-bottom: 15px; }
-        .sk-avatar { width: 32px; height: 32px; border-radius: 50%; background-color: #334155; animation: pulse 1.5s infinite; }
-        .sk-text { width: 60%; height: 40px; border-radius: 0 12px 12px 12px; background-color: #334155; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 0.7; } 100% { opacity: 0.4; } }
-
-        /* CTA Button */
-        .cta-button { 
-            display: block; width: 100%; padding: 15px; 
-            background-color: var(--primary); 
-            color: #FFFFFF; text-decoration: none; 
-            font-weight: 600; border-radius: 10px; font-size: 15px; border: none; cursor: pointer; 
-            box-shadow: 0 0 15px var(--primary-glow); 
-            margin-top: 10px; position: relative; overflow: hidden; z-index: 1;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
-        .cta-button::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
-            transform: skewX(-25deg); z-index: 2; animation: shimmer 3s infinite;
-        }
-        .cta-button:hover { background-color: var(--primary-dark); box-shadow: 0 0 25px var(--primary-glow); }
-        .cta-button:active { transform: scale(0.98); }
-        @keyframes shimmer { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .footer { text-align: center; font-size: 11px; color: #52525b; margin-top: 30px; padding-bottom: 20px; font-family: 'Plus Jakarta Sans', sans-serif; }
 
     </style>
 </head>
 <body>
 
-    <div class="digital-grid"></div>
-    <div class="horizon-glow"></div>
+    <div class="bg-glow"></div>
 
-    <div class="app-container">
-        <h1>Sewa LinkedIn Zen</h1>
-        <p class="description">
-            Sewakan akun LinkedIn-mu dan dapatkan passive income <span class="highlight">192Rb per Minggu</span>.
-        </p>
-        <hr class="separator">
-
-        <details>
-            <summary>Kriteria Akun</summary>
-            <div class="details-content">
-                <ul><li>Min Pembuatan November 2024</li><li>Min koneksi 20</li><li>Akun Indonesia</li></ul>
+    <div class="main-container">
+        
+        <div class="section-row">
+            <div class="logo-container">
+                <img src="Zen.png" alt="Zen" class="logo-img" onerror="this.src='https://via.placeholder.com/80/0077B5/FFFFFF?text=ZEN'">
             </div>
-        </details>
+            <h1 class="title">Rent Linkedin Zen</h1>
+            <div class="subtitle">Grup sewa Linkedin Terpercaya</div>
+        </div>
 
-        <details>
-            <summary>Rate Sewa</summary>
-            <div class="details-content">
-                <ul><li>192Rb untuk akun Normal New Acc (Kena Ban pas awal sewa tetap full payment)</li><li>270rb untuk akun yang berhasil Unrestrict / Un ban</li></ul>
-            </div>
-        </details>
+        <div class="price-section">
+            <span class="price-label">Sewa Mingguan</span>
+            <div class="price-value">IDR 192.000</div>
+            <div class="price-sub">Restric pas awal sewa tetap full payment</div>
+        </div>
 
-        <details>
-            <summary>Peraturan Sewa</summary>
-            <div class="details-content">
-                <ul><li>1 WhatsApp 1 Akun LinkedIn</li><li>Bukan akun Hasil beli / Tuyulan</li><li>No 2FA</li><li>Tidak terkena limit mingguan</li><li>Tidak terkena Freeze</li><li>Koneksi Real Orang bukan Bot baru buat</li><li>Wajib log out sebelum Start sewa</li></ul>
-                <div class="warning-box"><strong>Peringatan:</strong> Bagi yang melanggar rules akan di blacklist dari Project ini</div>
-            </div>
-        </details>
+        <div class="section-row">
+            <div class="section-title">Kriteria Akun</div>
+            <div class="list-item"><div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>Pembuatan Min. Nov 2024</div>
+            <div class="list-item"><div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>Koneksi Minimal 20+</div>
+            <div class="list-item"><div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>Akun Lokal Indonesia</div>
+        </div>
 
-        <details>
-            <summary>Cara mulai sewa?</summary>
-            <div class="details-content">
-                <ul><li>Pada Jam 9 Malam WIB akan dibagikan Link Form start sewa di Grup Zen</li><li>Cukup isi form tersebut dan tunggu respon dari Client-nya</li></ul>
-                <div class="form-image-container"><img src="Form.png" alt="Contoh Form Sewa"></div>
-            </div>
-        </details>
+        <div class="section-row">
+            <div class="section-title">Detail Payment</div>
+            <div class="payment-row"><span class="pay-label">Akun Normal</span><span class="pay-val">Rp 192.000</span></div>
+            <div class="payment-row"><span class="pay-label">Akun Un-Ban</span><span class="pay-val">Rp 270.000</span></div>
+            <div class="payment-row"><span class="pay-label">Jadwal Cair</span><span class="pay-val highlight">Hari Minggu</span></div>
+        </div>
 
-        <details>
-            <summary>Jadwal sewa & Payment</summary>
-            <div class="details-content">
-                <ul><li>Jadwal start sewa Mulai dari Minggu - Jumat Jam 9 malam</li><li>Jadwal Payment hari Minggu (Jika tidak ada keterlambatan)</li></ul>
-            </div>
-        </details>
+        <div class="section-row">
+            <div class="warning-title">⚠️ Special Rules</div>
+            <ul class="warning-list">
+                <li class="warning-item">Minggu pertama sewa tapi ke ban di tengah jalan, tetap dikenakan full payment Rp192.000. Harap dimengerti.</li>
+                <li class="warning-item">Bawa member lebih dari 1 bisa 1 Payment.</li>
+            </ul>
+        </div>
 
-        <details>
-            <summary>Disewa untuk apa?</summary>
-            <div class="details-content">
-                <ul><li>Untuk Promosi + Naikin engagement di region US atau Region Client</li></ul>
-                <div class="example-visuals">
-                    <div class="svg-container">
-                        <span class="svg-label">Contoh: Push Engagement (High Traffic)</span>
-                        <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0" y="0" width="340" height="180" fill="#FFFFFF"/>
-                            <rect x="0" y="0" width="340" height="60" fill="url(#coverGradient)"/>
-                            <defs><linearGradient id="coverGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#2563EB;stop-opacity:0.8" /><stop offset="100%" style="stop-color:#06B6D4;stop-opacity:0.6" /></linearGradient></defs>
-                            <circle cx="50" cy="60" r="35" fill="#FFFFFF"/>
-                            <circle cx="50" cy="60" r="32" fill="#E1E9EE"/>
-                            <path d="M50 48 C50 48 56 48 56 56 C56 64 44 64 44 56 C44 48 50 48 50 48 Z M34 82 C34 72 40 68 50 68 C60 68 66 72 66 82" fill="#94A3B8"/>
-                            <text x="95" y="55" font-family="sans-serif" font-size="14" font-weight="bold" fill="#191919">Zen Partner Account</text>
-                            <text x="95" y="72" font-family="sans-serif" font-size="10" fill="#666666">Digital Marketing Specialist | Growth Hacker</text>
-                            <text x="95" y="85" font-family="sans-serif" font-size="9" fill="#888888">Los Angeles, CA • 500+ Connections</text>
-                            <g transform="translate(15, 105)">
-                                <rect x="0" y="0" width="310" height="65" rx="6" fill="#F8FAFC" stroke="#E6E8EC"/>
-                                <text x="15" y="20" font-family="sans-serif" font-size="10" font-weight="bold" fill="#191919">Profile Views</text>
-                                <text x="240" y="20" font-family="sans-serif" font-size="10" font-weight="bold" fill="#10B981" text-anchor="end">▲ 85%</text>
-                                <polyline points="15,50 60,45 100,48 140,30 180,35 220,20 260,25 295,10" fill="none" stroke="#10B981" stroke-width="2" stroke-linejoin="round"/>
-                                <path d="M15,50 L60,45 L100,48 L140,30 L180,35 L220,20 L260,25 L295,10 V60 H15 Z" fill="#10B981" opacity="0.1"/>
-                            </g>
-                        </svg>
+        <div class="section-row">
+            <div class="section-title">Fungsi Akun</div>
+            <p class="usage-text">Digunakan untuk promosi digital, push engagement, dan meningkatkan impresi profil di negara target.</p>
+
+            <div class="ln-card">
+                <div class="ln-banner"></div>
+                <div class="ln-avatar-real"></div>
+                <div class="ln-body">
+                    <div class="ln-skele ln-name"></div>
+                    <div class="ln-skele ln-headline"></div>
+                    <div class="ln-skele ln-loc"></div>
+                    <div class="ln-actions">
+                        <button class="ln-btn ln-btn-blue">Connect</button>
+                        <button class="ln-btn ln-btn-outline">Message</button>
+                        <div class="ln-btn-more"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16a2 2 0 012 2 2 2 0 01-2 2 2 2 0 01-2-2 2 2 0 012-2zm0-6a2 2 0 012 2 2 2 0 01-2 2 2 2 0 01-2-2 2 2 0 012-2zm0-6a2 2 0 012 2 2 2 0 01-2 2 2 2 0 01-2-2 2 2 0 012-2z"/></svg></div>
+                    </div>
+                    <div class="ln-analytics-box">
+                        <div class="ln-ana-header">
+                            <div class="ln-ana-title-group">
+                                <div class="ln-ana-title">Analytics & tools</div>
+                                <div class="ln-ana-subtitle">Displaying analytics for past 7 days</div>
+                            </div>
+                            <svg class="ln-chevron" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 17l5-5-5-5v10z"/></svg>
+                        </div>
+                        <div class="ln-stat-row">
+                            <div class="ln-stat-left">
+                                <div class="ln-stat-icon-wrap">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7zm0 12a5 5 0 110-10 5 5 0 010 10z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </div>
+                                <div class="ln-stat-data">
+                                    <span class="ln-stat-num">12,408</span>
+                                    <span class="ln-stat-label">Post impressions</span>
+                                    <div class="ln-growth">
+                                        <svg width="12" height="12" viewBox="0 0 24 24"><path d="M12 4l-8 8h16l-8-8z"/></svg>
+                                        +840% past 7 days
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ln-sparkline-wrap">
+                                <svg class="ln-sparkline" viewBox="0 0 70 30" preserveAspectRatio="none">
+                                    <polyline class="spark-line-jagged" points="0,25 10,15 20,20 30,10 40,18 50,5 60,12 70,2" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </details>
 
-        <div class="chat-section">
-            <div class="chat-header">
-                <div class="avatar" style="width: 35px; height: 35px;">ZP</div>
-                <div class="chat-title-group">
-                    <span class="chat-title">Zen Partner Community</span>
-                    <span class="chat-subtitle">Diskusi & Bukti Cuan</span>
-                </div>
-            </div>
-
-            <div id="commentsList" class="chat-body">
-                </div>
-
-            <div id="formClosedMsg" style="display: none;">🔒 Chat dikunci oleh Admin</div>
-
-            <div id="activeForm" class="chat-input-area">
-                <div class="chat-inputs-row">
-                    <input type="text" id="inputName" class="chat-input input-name" placeholder="Nama" maxlength="15">
-                    <input type="text" id="inputComment" class="chat-input input-msg" placeholder="Ketik pesan..." maxlength="150">
-                </div>
-                
-                <div class="chat-actions">
-                    <div class="file-upload-wrapper" style="margin:0;">
-                        <label for="inputImage" class="btn-attach">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
-                            Foto
-                        </label>
-                        <input type="file" id="inputImage" accept="image/*" onchange="updateFileName()">
-                        <span id="fileNameDisplay"></span>
+            <div style="margin-bottom: 5px; margin-left: 2px; font-size: 11px; color: #a1a1aa; font-weight: 600; text-transform: uppercase;">Sample Post</div>
+            <div class="ln-post-card">
+                <div class="post-header">
+                    <div class="post-avatar"></div>
+                    <div class="post-meta">
+                        <span class="post-name">Zen Admin</span>
+                        <div class="post-info">
+                            2h <span class="post-dot">•</span> 
+                            <span class="post-globe"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-1.07 3.97-2.9 5.4z"/></svg></span>
+                        </div>
                     </div>
-
-                    <button onclick="postComment()" id="submitBtn" class="btn-send">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                    </button>
+                    <div class="post-menu">...</div>
+                </div>
+                <div class="post-text">
+                    Expand your digital business reach to the global market effortlessly. 🚀📈<br>
+                    <span class="post-hashtag">#GlobalMarket</span> <span class="post-hashtag">#DigitalGrowth</span> <span class="post-hashtag">#Business</span>
+                </div>
+                <div class="post-media">
+                    <div class="media-shape s1"></div>
+                    <div class="media-shape s2"></div>
+                    <div class="media-content">
+                        <div class="media-title">Global Market<br>Unlock</div>
+                        <div class="media-sub">DIGITAL SERVICE</div>
+                    </div>
+                </div>
+                <div class="post-stats">
+                    <div class="stats-left">
+                        <div class="stat-icon-stack">
+                            <div class="reaction-icon bg-like"><svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></div>
+                            <div class="reaction-icon bg-love"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+                            <div class="reaction-icon bg-idea"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg></div>
+                        </div>
+                        <span>You and 85 others</span>
+                    </div>
+                    <div class="stats-right" style="font-size: 11px; color: #a1a1aa;">4 comments • 2 reposts</div>
+                </div>
+                <div class="post-actions">
+                    <div class="action-btn"><div class="action-icon"><svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></div><span class="action-label">Like</span></div>
+                    <div class="action-btn"><div class="action-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="action-label">Comment</span></div>
+                    <div class="action-btn"><div class="action-icon"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div><span class="action-label">Repost</span></div>
+                    <div class="action-btn"><div class="action-icon"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div><span class="action-label">Send</span></div>
                 </div>
             </div>
         </div>
 
-        <a href="https://chat.whatsapp.com/DxZ6sNwtLpKIIInRtCBoQ6" class="cta-button">Gabung sekarang!</a>
-
-        <div class="admin-trigger" onclick="toggleAdminPanel()">Admin Access</div>
-
-        <div id="adminPanel" class="admin-panel">
-            <p style="font-size:12px; font-weight:700; margin-bottom:10px; color: var(--text-main);">MENU ADMIN (Mode Edit Aktif)</p>
-            <button onclick="updateFormStatus('open')" class="admin-btn btn-open">Buka Chat</button>
-            <button onclick="updateFormStatus('closed')" class="admin-btn btn-close">Kunci Chat</button>
-            <button onclick="logoutAdmin()" class="admin-btn btn-logout">Keluar Mode Admin</button>
-            <p style="font-size:10px; color:#94A3B8; margin-top:5px; text-align:center;">*Tombol Edit & Hapus muncul di bubble chat</p>
+        <div class="section-row">
+            <div class="section-title">Referral Event 🎉</div>
+            <p class="usage-text">Gabung tim refferer zen dan dapatkan bonus tiap week nya.</p>
+            <div class="referral-box">
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>Jumlah Invite</th>
+                            <th style="text-align:right;">Bonus Cash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1 Orang</td><td class="ref-val">$2</td></tr>
+                        <tr><td>2 Orang</td><td class="ref-val">$4</td></tr>
+                        <tr><td>3 Orang</td><td class="ref-val">$6</td></tr>
+                        <tr class="row-highlight">
+                            <td>> 10 Orang <span class="rate-badge">Rate Naik</span></td>
+                            <td class="ref-val">$3 / pax</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <div class="section-row">
+            <div class="section-title">Payment All Bank & E-Wallet</div>
+            <div class="payment-logos">
+                <div class="pay-card"><svg class="pay-svg" viewBox="0 0 80 36"><text x="50%" y="50%" class="logo-text">BCA</text></svg></div>
+                <div class="pay-card"><svg class="pay-svg" viewBox="0 0 80 36"><text x="50%" y="50%" class="logo-text" style="font-weight:700;">mandiri</text></svg></div>
+                <div class="pay-card"><svg class="pay-svg" viewBox="0 0 80 36"><text x="50%" y="50%" class="logo-text">BRI</text></svg></div>
+                <div class="pay-card"><svg class="pay-svg" viewBox="0 0 80 36"><text x="50%" y="50%" class="logo-text">BNI</text></svg></div>
+                <div class="pay-card"><svg class="pay-svg" viewBox="0 0 80 36"><text x="50%" y="50%" class="logo-text">gopay</text></svg></div>
+                <div class="pay-card"><svg class="pay-svg" viewBox="0 0 80 36"><text x="50%" y="50%" class="logo-text">DANA</text></svg></div>
+                <div class="pay-card"><svg class="pay-svg" viewBox="0 0 80 36"><text x="50%" y="50%" class="logo-text">OVO</text></svg></div>
+                <div class="pay-card"><svg class="pay-svg" viewBox="0 0 80 36"><text x="50%" y="50%" class="logo-text">QRIS</text></svg></div>
+            </div>
+        </div>
+
+        <div class="section-row">
+            <div class="section-title">Gimana cara mulai sewa?</div>
+            <p class="usage-text">
+                Pantau grup jam 9 malam, akan di announce form start sewa cukup isi form itu.
+            </p>
+        </div>
+
+        <div class="cta-container">
+            <a href="https://chat.whatsapp.com/DxZ6sNwtLpKIIInRtCBoQ6" target="_blank" rel="noopener noreferrer" class="btn-wa">
+                <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                Join Grup Sewa
+            </a>
+            <div class="footer">Powered by Zen Ecosystem</div>
+        </div>
+
     </div>
 
-    <script>
-        const BIN_ID = '694cd5a7d0ea881f403f0a75';
-        const API_KEY = '$2a$10$Ro/Yy/lqN5YK0KsJrzVO2ep.vjMn209R3gojt.4Ksq4XUrhjdX1UO';
-        const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-        const avatarColors = ['#0056D2', '#F59E0B', '#10B981', '#D93025', '#8E44AD'];
-        
-        let isAdmin = false;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchComments();
-        });
-
-        function updateFileName() {
-            const input = document.getElementById('inputImage');
-            const display = document.getElementById('fileNameDisplay');
-            if (input.files.length > 0) {
-                display.innerText = "1 Foto";
-            } else {
-                display.innerText = "";
-            }
-        }
-
-        function compressImage(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = (event) => {
-                    const img = new Image();
-                    img.src = event.target.result;
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 300; 
-                        const scaleSize = MAX_WIDTH / img.width;
-                        canvas.width = MAX_WIDTH;
-                        canvas.height = img.height * scaleSize;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        resolve(canvas.toDataURL('image/jpeg', 0.6));
-                    }
-                    img.onerror = (err) => reject(err);
-                }
-                reader.onerror = (err) => reject(err);
-            });
-        }
-
-        function toggleAdminPanel() {
-            const panel = document.getElementById('adminPanel');
-            if (isAdmin) {
-                panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-            } else {
-                const code = prompt("Masukkan Kode Akses Admin:");
-                if (code === '0858') {
-                    isAdmin = true;
-                    panel.style.display = 'block';
-                    alert("Akses Diterima. Mode Edit/Hapus Aktif.");
-                    fetchComments(); 
-                } else if (code !== null) {
-                    alert("Kode Salah!");
-                }
-            }
-        }
-
-        function logoutAdmin() {
-            isAdmin = false;
-            document.getElementById('adminPanel').style.display = 'none';
-            fetchComments();
-            alert("Anda telah keluar dari Mode Admin.");
-        }
-
-        async function fetchComments() {
-            const listContainer = document.getElementById('commentsList');
-            const activeForm = document.getElementById('activeForm');
-            const closedMsg = document.getElementById('formClosedMsg');
-            
-            // Skeleton Chat
-            const skeletonHTML = `
-                <div class="skeleton-bubble"><div class="sk-avatar"></div><div class="sk-text"></div></div>
-                <div class="skeleton-bubble"><div class="sk-avatar"></div><div class="sk-text"></div></div>
-            `;
-            listContainer.innerHTML = skeletonHTML;
-
-            try {
-                const response = await fetch(BASE_URL + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-                if (!response.ok) throw new Error('Gagal memuat data');
-
-                const data = await response.json();
-                const record = data.record;
-                const users = record.users || [];
-                const status = record.formStatus || 'open';
-
-                if (status === 'closed') {
-                    activeForm.style.display = 'none';
-                    closedMsg.style.display = 'block';
-                } else {
-                    activeForm.style.display = 'flex';
-                    closedMsg.style.display = 'none';
-                }
-
-                renderComments(users);
-
-            } catch (error) {
-                console.error(error);
-                listContainer.innerHTML = '<div style="color:red; font-size:12px; text-align:center;">Gagal memuat chat.</div>';
-            }
-        }
-
-        function renderComments(users) {
-            const listContainer = document.getElementById('commentsList');
-            listContainer.innerHTML = '';
-
-            if (users.length === 0) {
-                listContainer.innerHTML = '<div style="color:#94A3B8; font-size:12px; text-align:center; margin-top:20px;">Belum ada pesan. Mulai obrolan!</div>';
-                return;
-            }
-
-            // Chat biasanya urutan terlama di atas, terbaru di bawah.
-            // Tapi karena user mungkin lebih suka lihat terbaru dulu, kita balik.
-            // Tapi untuk "Chat Feel", biasanya scroll ke bawah. 
-            // Kita pakai standard: Terbaru paling bawah (tapi scroll auto bottom).
-            
-            // JSONBin simpan [user1, user2]. Kita render urut index (user1 atas, user2 bawah).
-            
-            users.forEach((user, index) => {
-                // Untuk edit/delete, kita pakai index asli
-                const realIndex = index; 
-                
-                const initial = user.name ? user.name.charAt(0) : '?';
-                const safeName = user.name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                const safeComment = user.comment.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                
-                let imageHTML = '';
-                if (user.image) {
-                    imageHTML = `<img src="${user.image}" class="chat-image" alt="Lampiran" onclick="window.open(this.src)">`;
-                }
-
-                let adminBtns = '';
-                if (isAdmin) {
-                    adminBtns = `
-                        <div class="admin-controls">
-                            <button onclick="editComment(${realIndex})" class="btn-mini btn-edit">Edit</button>
-                            <button onclick="deleteComment(${realIndex})" class="btn-mini btn-delete">Hapus</button>
-                        </div>
-                    `;
-                }
-
-                const bubbleHTML = `
-                    <div class="chat-bubble-container">
-                        <div class="chat-avatar">${initial}</div>
-                        <div class="chat-bubble">
-                            <span class="bubble-name">${safeName}</span>
-                            <span class="bubble-text">${safeComment}</span>
-                            ${imageHTML}
-                            <span class="bubble-time">${user.date || ''}</span>
-                            ${adminBtns}
-                        </div>
-                    </div>
-                `;
-                listContainer.insertAdjacentHTML('beforeend', bubbleHTML);
-            });
-            
-            // Auto scroll to bottom
-            listContainer.scrollTop = listContainer.scrollHeight;
-        }
-
-        async function postComment() {
-            const nameInput = document.getElementById('inputName');
-            const commentInput = document.getElementById('inputComment');
-            const imageInput = document.getElementById('inputImage');
-            const submitBtn = document.getElementById('submitBtn');
-
-            const name = nameInput.value.trim();
-            const comment = commentInput.value.trim();
-
-            if (!name || !comment) { alert("Isi nama dan pesan!"); return; }
-
-            submitBtn.disabled = true;
-
-            try {
-                let base64Image = null;
-                if (imageInput.files.length > 0) {
-                    base64Image = await compressImage(imageInput.files[0]);
-                }
-
-                const getResponse = await fetch(BASE_URL + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-                const getData = await getResponse.json();
-                let currentUsers = getData.record.users || [];
-                let currentStatus = getData.record.formStatus || 'open';
-
-                const today = new Date();
-                const timeString = today.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-                
-                const newUser = { 
-                    name: name, 
-                    comment: comment, 
-                    date: timeString, // Pake jam biar kayak chat
-                    image: base64Image 
-                };
-                
-                currentUsers.push(newUser); // Push ke bawah (terbaru)
-
-                const updateResponse = await fetch(BASE_URL, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
-                    body: JSON.stringify({ users: currentUsers, formStatus: currentStatus })
-                });
-
-                if (updateResponse.ok) {
-                    commentInput.value = ''; // Nama jangan dihapus biar enak chat lagi
-                    imageInput.value = '';
-                    document.getElementById('fileNameDisplay').innerText = "";
-                    fetchComments();
-                } else { alert("Gagal kirim."); }
-
-            } catch (error) { console.error(error); alert("Gagal kirim."); } 
-            finally { submitBtn.disabled = false; }
-        }
-
-        async function deleteComment(index) {
-            if (!confirm("Hapus pesan ini?")) return;
-            try {
-                const getResponse = await fetch(BASE_URL + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-                const getData = await getResponse.json();
-                let currentUsers = getData.record.users || [];
-                let currentStatus = getData.record.formStatus || 'open';
-
-                if (index > -1 && index < currentUsers.length) {
-                    currentUsers.splice(index, 1);
-                }
-
-                const updateResponse = await fetch(BASE_URL, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
-                    body: JSON.stringify({ users: currentUsers, formStatus: currentStatus })
-                });
-
-                if (updateResponse.ok) { fetchComments(); } 
-                else { alert("Gagal hapus."); }
-
-            } catch (e) { console.error(e); alert("Error."); }
-        }
-
-        async function editComment(index) {
-            try {
-                const getResponse = await fetch(BASE_URL + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-                const getData = await getResponse.json();
-                let currentUsers = getData.record.users || [];
-                let currentStatus = getData.record.formStatus || 'open';
-
-                const oldComment = currentUsers[index].comment;
-                const newComment = prompt("Edit pesan:", oldComment);
-
-                if (newComment !== null && newComment.trim() !== "") {
-                    currentUsers[index].comment = newComment;
-                    const updateResponse = await fetch(BASE_URL, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
-                        body: JSON.stringify({ users: currentUsers, formStatus: currentStatus })
-                    });
-                    if (updateResponse.ok) { fetchComments(); }
-                }
-            } catch (e) { console.error(e); alert("Gagal edit."); }
-        }
-
-        async function updateFormStatus(newStatus) {
-            try {
-                const getResponse = await fetch(BASE_URL + '/latest', { headers: { 'X-Master-Key': API_KEY } });
-                const getData = await getResponse.json();
-                const currentUsers = getData.record.users || [];
-
-                const updateResponse = await fetch(BASE_URL, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
-                    body: JSON.stringify({ users: currentUsers, formStatus: newStatus })
-                });
-
-                if (updateResponse.ok) { alert(`Status Chat: ${newStatus.toUpperCase()}`); fetchComments(); }
-            } catch (e) { console.error(e); alert("Error koneksi."); } 
-        }
-    </script>
-
 </body>
-                </html>
+</html>
