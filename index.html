@@ -3,504 +3,538 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zen x 8800 - Sewa Akun LinkedIn</title>
+    <title>Rent Linkedin By Zen</title>
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Mono:wght@500;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- NEO-BRUTALISM MOBILE OPTIMIZED --- */
+        /* --- RESET & NEON CANDY DARK THEME VARIABLES --- */
         :root {
-            --bg-body: #FFDEE9;
-            --bg-card: #ffffff;
-            --primary: #5c27fe;
-            --accent: #ffeb3b;
-            --border-color: #000000;
-            --shadow-hard: 4px 4px 0px 0px #000000; /* Shadow sedikit dikecilkan untuk mobile */
-            --border-width: 2.5px; /* Border sedikit tipis biar elegan di layar kecil */
+            --dark-bg: #09090b; /* Warna latar sangat gelap */
+            --glass-bg: rgba(20, 20, 25, 0.7);
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
             
-            --text-main: #000000;
-            --text-sub: #333;
-            --success: #00e676;
-            --danger: #ff1744;
+            /* Neon Candy Colors (Nyala di Dark Mode) */
+            --neon-pink: #ff79c6;
+            --neon-blue: #8be9fd;
+            --neon-yellow: #f1fa8c;
+            --neon-green: #50fa7b;
+            --neon-purple: #bd93f9;
+            
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-overflow-scrolling: touch; 
+        }
 
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--bg-body);
-            background-image: radial-gradient(#000 1px, transparent 1px);
-            background-size: 15px 15px; /* Dot pattern lebih rapat */
+            background-color: var(--dark-bg);
             color: var(--text-main);
-            line-height: 1.4;
-            padding-bottom: 100px; /* Space untuk sticky button */
+            min-height: 100dvh; 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
             overflow-x: hidden;
+            position: relative;
+            padding: 20px 0 40px 0; 
         }
 
-        .container { 
-            max-width: 100%; 
-            margin: 0 auto; 
-            padding: 16px; /* Padding container pas untuk HP */
-        }
-        
-        /* Typography Mobile Friendly */
-        h1, h2, h3 { 
-            font-weight: 700; margin-bottom: 0.5rem; 
-            text-transform: uppercase; letter-spacing: -0.5px;
-        }
-        h1 { 
-            font-size: 2.4rem; /* Ukuran pas di 6 inci */
-            -webkit-text-stroke: 1px black; 
-            line-height: 1.1; 
-        }
-        p { font-size: 0.95rem; color: var(--text-main); margin-bottom: 1rem; font-weight: 500; }
-        .text-center { text-align: center; }
-        
-        .fw-bold { 
-            font-weight: 700; background: var(--accent); 
-            padding: 2px 6px; border: 2px solid black; 
-            box-shadow: 2px 2px 0 black; display: inline-block;
+        /* --- BACKGROUND FLOATING BLOBS (NEON VIBE) --- */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: -1;
+            opacity: 0.25; /* Opacity diturunkan agar text tetap jelas */
+            animation: float 6s ease-in-out infinite;
         }
 
-        /* Animation */
-        .fade-in {
-            opacity: 0; transform: translateY(15px);
-            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        .orb-1 {
+            width: 250px; height: 250px;
+            background: var(--neon-pink);
+            top: 5%; left: -50px;
         }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        /* Components */
-        .hero {
-            text-align: center; padding: 40px 15px 30px;
-            background: var(--accent);
-            border: var(--border-width) solid var(--border-color);
-            box-shadow: var(--shadow-hard);
-            margin-bottom: 24px;
+        .orb-2 {
+            width: 200px; height: 200px;
+            background: var(--neon-blue);
+            bottom: 10%; right: -30px;
+            animation-delay: -3s;
         }
-        
-        .card {
-            background: var(--bg-card); 
-            border: var(--border-width) solid var(--border-color);
-            padding: 20px; /* Padding dikurangi biar lega */
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .glass-container {
+            width: 92%; 
+            max-width: 420px;
+            background: var(--glass-bg); 
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 2px solid var(--glass-border);
+            border-radius: 40px; /* Tetap super rounded */
+            padding: 35px 25px; 
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-bottom: 20px;
-            box-shadow: var(--shadow-hard);
-            border-radius: 0;
-            position: relative;
         }
 
+        @keyframes popIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* --- HEADER --- */
+        .header { margin-bottom: 25px; }
+        
+        .logo-icon {
+            font-size: 45px; 
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 15px rgba(139, 233, 253, 0.4));
+        }
+
+        h1 {
+            font-size: 24px; 
+            font-weight: 900;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 0 10px; 
+        }
+
+        .highlight-candy { 
+            color: #000; /* Hitam agar kontras di neon */
+            font-weight: 900;
+            font-size: 15px;
+            background: var(--neon-pink);
+            padding: 2px 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-top: 6px;
+            box-shadow: 0 0 15px rgba(255, 121, 198, 0.4);
+        }
+
+        /* --- SECTION TITLES --- */
         .section-title {
-            font-size: 1.25rem; margin-bottom: 15px; 
-            display: inline-flex; align-items: center; gap: 10px;
-            background: black; color: white; padding: 8px 12px; 
-            transform: rotate(-1deg); border: 2px solid white;
-            box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #71717a;
+            margin-bottom: 12px;
+            font-weight: 800;
+            text-align: left;
+            padding-left: 10px;
+            margin-top: 25px;
         }
 
-        /* --- DASHBOARD JADWAL --- */
-        .schedule-dashboard {
-            background: black; color: white;
-            border: var(--border-width) solid white; 
-            outline: var(--border-width) solid black; 
-            padding: 20px; margin: 4px; /* Margin kecil biar border gak kepotong */
-            position: relative;
-        }
-        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        
-        .status-badge {
-            background: white; color: black; padding: 6px 12px; 
-            border: 2px solid black; font-weight: 700; font-family: 'DM Mono', monospace;
-            display: flex; align-items: center; gap: 6px; font-size: 0.75rem;
-        }
-        
-        .timer-display {
-            font-family: 'DM Mono', monospace; font-size: 2.6rem; /* Font timer pas */
-            font-weight: 700; margin: 5px 0 20px; color: var(--accent);
-            text-shadow: 3px 3px 0px #5c27fe; line-height: 1;
-        }
-        
-        .dual-clock {
-            display: flex; justify-content: space-between; 
-            border-top: 2px dashed #444; padding-top: 15px;
-        }
-        .clock-item h4 { font-size: 0.7rem; color: #ccc; margin-bottom: 2px; font-family: 'DM Mono'; }
-        .clock-item div { font-size: 1rem; font-weight: 700; font-family: 'DM Mono'; }
-        .pulse-active { animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* --- RATE CARD --- */
-        .rate-interactive-box { text-align: center; padding: 5px 0; }
-        .rate-price { 
-            font-size: 3rem; font-weight: 700; color: black; line-height: 1;
-            text-shadow: 2px 2px 0px white; -webkit-text-stroke: 1px black;
-            margin-bottom: 5px;
-        }
-        .rate-price.bonus-active { color: var(--success); }
-        .rate-unit { 
-            font-size: 0.9rem; font-family: 'DM Mono'; 
-            background: white; border: 2px solid black; display: inline-block; padding: 2px 8px; font-weight: bold;
-        }
-
-        .gamification-bar-container { 
-            margin: 20px 0 25px; position: relative; border: 3px solid black; padding: 3px; background: white;
-        }
-        .bar-bg { background: transparent; height: 16px; }
-        .bar-fill {
-            height: 100%; background: var(--primary); width: 70%; 
-            border-right: 3px solid black;
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(0,0,0,0.1) 8px, rgba(0,0,0,0.1) 16px);
-            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .bar-labels { display: flex; justify-content: space-between; margin-top: 6px; font-weight: 700; font-family: 'DM Mono'; font-size: 0.75rem; }
-
-        /* Toggle Switch - Diperbesar untuk Jempol */
-        .unlock-toggle-container {
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            background: #fff; padding: 12px; border: 3px solid black; box-shadow: 4px 4px 0px #000;
-        }
-        .switch-label { position: relative; display: inline-block; width: 56px; height: 32px; }
-        .switch-label input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: white; border: 3px solid black; transition: .2s;
-        }
-        .slider:before {
-            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 4px;
-            background-color: black; transition: .2s;
-        }
-        input:checked + .slider { background-color: var(--success); }
-        input:checked + .slider:before { transform: translateX(24px); background: white; border: 2px solid black; }
-        
-        .toggle-text { text-align: left; line-height: 1.2; font-size: 0.9rem; }
-
-        /* Message */
-        .bonus-alert {
-            margin-top: 15px; background: var(--success); color: black; padding: 12px;
-            border: 3px solid black; font-weight: bold; display: none; box-shadow: 4px 4px 0px black;
-            font-size: 0.9rem;
-        }
-
-        /* Lists */
-        .check-list, .warn-list { list-style: none; }
-        .check-list li, .warn-list li {
-            margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-weight: 700;
-            border-bottom: 2px solid #eee; padding-bottom: 5px; font-size: 0.9rem;
-        }
-        .check-list li::before, .warn-list li::before {
-            flex-shrink: 0; width: 22px; height: 22px; 
-            display: flex; align-items: center; justify-content: center; font-size: 0.75rem; 
-            border: 2px solid black;
-        }
-        .check-list li::before { content: 'V'; color: white; background: black; }
-        .warn-list li::before { content: '!'; color: white; background: var(--danger); }
-
-        /* Invite Card */
-        .invite-card {
-            background: var(--primary); color: white; 
-            border: 3px solid black; box-shadow: 6px 6px 0px black; padding: 20px;
-        }
-        .invite-row {
-            display: flex; justify-content: space-between; padding: 10px 0;
-            border-bottom: 2px dashed rgba(255,255,255,0.5); font-family: 'DM Mono'; font-weight: 700; font-size: 0.95rem;
-        }
-
-        /* Payment Grid - 4 Kolom Rapi */
-        .payment-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 Logo per baris */
-            gap: 8px;
-            margin-top: 15px;
-        }
-        .pay-item {
-            border: 2px solid black; background: white; padding: 4px;
-            display: flex; align-items: center; justify-content: center;
-            height: 45px; transition: all 0.2s; cursor: pointer;
-            filter: grayscale(100%);
-        }
-        .pay-item:active { background: #eee; transform: translate(1px, 1px); }
-        .pay-item svg { width: 100%; height: 100%; max-height: 24px; }
-        
-        /* Marquee Text - Overflow Fix */
-        .marquee-wrapper {
-            width: 100vw;
-            margin-left: -20px; /* Offset container padding */
+        /* --- PROMO IMAGE (FLEKSIBEL) --- */
+        .promo-image-container {
+            width: 100%;
+            border-radius: 20px;
             overflow: hidden;
-            margin-top: 20px;
-            margin-bottom: -10px;
+            border: 2px solid var(--glass-border);
+            position: relative;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            /* Aspect ratio dihapus agar fleksibel */
+            background: #111; /* Background placeholder saat gambar belum load */
         }
-        .marquee-container {
-            white-space: nowrap; background: black; color: var(--accent);
-            padding: 8px 0; border-top: 3px solid black; border-bottom: 3px solid black;
-            font-family: 'DM Mono'; font-weight: bold; transform: rotate(-2deg) scale(1.05);
-        }
-        .marquee-content { display: inline-block; animation: marquee 12s linear infinite; font-size: 0.9rem; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* CTA Sticky */
-        .cta-container {
-            position: fixed; bottom: 20px; left: 16px; right: 16px; /* Margin kiri kanan */
-            z-index: 1000;
+        /* Height dibuat auto agar container mengikuti proporsi gambar */
+        .promo-image { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
         }
-        .btn-cta {
-            display: block; width: 100%; 
-            background-color: black; color: white;
-            text-align: center; padding: 18px; text-decoration: none;
-            font-weight: 700; font-size: 1.1rem; text-transform: uppercase;
-            border: 2px solid white; box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
-            transition: transform 0.1s; letter-spacing: 1px;
-        }
-        .btn-cta:active { transform: scale(0.98); background: var(--primary); }
 
+        .info-text {
+            text-align: left;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            padding: 0 5px;
+            line-height: 1.6;
+        }
+
+        /* --- CARD LIST SYSTEM (DARK BUBBLE 3D EFFECT) --- */
+        .content-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; 
+            margin-bottom: 10px;
+        }
+
+        .card-item {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px; 
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2), inset 0 -3px 0 rgba(0,0,0,0.4);
+            transition: all 0.2s ease;
+        }
+        
+        .card-item:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.2), inset 0 -1px 0 rgba(0,0,0,0.4);
+        }
+
+        .icon-box {
+            width: 40px; 
+            height: 40px;
+            border-radius: 50%; /* Bulat sempurna */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
+
+        /* Ikon pakai warna background agar pop-out di neon */
+        .icon-box i { font-size: 16px; color: var(--dark-bg); font-weight: 900;}
+        
+        /* Neon Colors */
+        .bg-pink { background: var(--neon-pink); box-shadow: 0 0 12px rgba(255, 121, 198, 0.3); }
+        .bg-blue { background: var(--neon-blue); box-shadow: 0 0 12px rgba(139, 233, 253, 0.3); }
+        .bg-yellow { background: var(--neon-yellow); box-shadow: 0 0 12px rgba(241, 250, 140, 0.3); }
+        .bg-green { background: var(--neon-green); box-shadow: 0 0 12px rgba(80, 250, 123, 0.3); }
+        .bg-purple { background: var(--neon-purple); box-shadow: 0 0 12px rgba(189, 147, 249, 0.3); }
+
+        .text-content { font-size: 13px; color: #e4e4e7; line-height: 1.4; font-weight: 500; width: 100%; }
+        .text-content b { color: #fff; font-weight: 800; display: inline-block; }
+
+        .sub-text { font-size: 11px; color: var(--text-muted); display: block; margin-top: 3px; font-weight: 500;}
+
+        .flex-row-between { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
+        .referral-price {
+            background: rgba(255, 121, 198, 0.15);
+            color: var(--neon-pink);
+            border: 1px solid rgba(255, 121, 198, 0.3);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            white-space: nowrap; 
+        }
+
+        .special-gold {
+            border-color: rgba(241, 250, 140, 0.3);
+            background: rgba(241, 250, 140, 0.03);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2), inset 0 -3px 0 rgba(0,0,0,0.4);
+        }
+        .special-gold b { color: var(--neon-yellow);}
+
+        /* --- COUNTDOWN STYLE (DARK BUBBLE BOXES) --- */
+        .countdown-wrapper {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(139, 233, 253, 0.03);
+            border: 1px solid rgba(139, 233, 253, 0.15);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .countdown-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--neon-blue);
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .timer-row { 
+            display: flex; 
+            gap: 8px; 
+            width: 100%; 
+            justify-content: center;
+            align-items: center;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 8px 0;
+            flex: 1; 
+            max-width: 65px; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 -2px 0 rgba(0,0,0,0.5);
+        }
+
+        .time-num { font-size: 18px; font-weight: 900; color: var(--neon-blue); line-height: 1.2; }
+        .time-unit { font-size: 9px; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; font-weight: 700;}
+        .colon { font-size: 18px; font-weight: 800; color: #52525b; margin-top: -12px; }
+
+        /* --- ALERT BOX --- */
+        .alert-box {
+            background: rgba(255, 85, 85, 0.1);
+            border: 1px solid rgba(255, 85, 85, 0.2);
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start; 
+            text-align: left;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            color: #ffb8b8;
+        }
+        .alert-box i { margin-right: 12px; font-size: 18px; margin-top: 2px; color: #ff5555;}
+        .alert-text { font-size: 12px; line-height: 1.5; font-weight: 500; }
+        .alert-text b { color: #fff; font-weight: 800;}
+
+        /* --- BUTTON (NEON GLOW) --- */
+        .btn-container { position: relative; width: 100%; margin-top: 10px; }
+        
+        .cta-btn {
+            position: relative; 
+            z-index: 2; width: 100%; padding: 18px;
+            border-radius: 30px; 
+            border: none; 
+            background: linear-gradient(45deg, #00b894, #50fa7b); 
+            color: #000; /* Text hitam agar pop up */
+            font-size: 16px; font-weight: 800; cursor: pointer;
+            transition: 0.2s; 
+            box-shadow: 0 8px 25px rgba(80, 250, 123, 0.3), inset 0 -4px 0 rgba(0, 100, 80, 0.2);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .cta-btn:active { 
+            transform: translateY(4px); 
+            box-shadow: 0 2px 10px rgba(80, 250, 123, 0.3), inset 0 -1px 0 rgba(0, 100, 80, 0.2);
+        }
+
+        .footer { margin-top: 30px; font-size: 12px; color: #52525b; font-weight: 600; padding-bottom: 10px;}
+        
+        /* Mobile Specific Adjustment */
+        @media screen and (max-width: 380px) {
+            .glass-container { padding: 30px 15px; width: 95%; }
+            h1 { font-size: 21px; }
+            .card-item { padding: 12px; }
+            .icon-box { margin-right: 10px; width: 36px; height: 36px;}
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header class="hero fade-in">
-            <h1>Zen x 8800</h1>
-            <p style="margin-top: 8px;">Passive Income <span class="fw-bold">190rb / minggu</span> dari sewain LinkedIn Old kamu.</p>
-        </header>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
-        <section class="card fade-in">
-            <h2 class="section-title">Tentang</h2>
-            <p>Akun dipakai untuk promosi digital (branding) di US & Eropa. Profil diubah sementara sesuai kebutuhan client.</p>
-        </section>
-
-        <section class="card fade-in" style="padding: 10px;">
-            <h2 class="section-title">Jadwal Setor</h2>
-            <div class="schedule-dashboard">
-                <div class="dashboard-header">
-                    <span style="font-family: 'DM Mono'; font-weight: bold; font-size: 0.7rem;">[ SERVER STATUS ]</span>
-                    <div id="statusBadge" class="status-badge">
-                        <span id="statusDot" style="width: 10px; height: 10px; background: black; border-radius: 0;"></span>
-                        <span id="statusText">CHECK...</span>
-                    </div>
-                </div>
-
-                <div style="text-align: center;">
-                    <p id="timerLabel" style="font-family: 'DM Mono'; font-size: 0.75rem; text-transform: uppercase;">Next Slot In:</p>
-                    <div id="mainTimer" class="timer-display">--:--:--</div>
-                </div>
-
-                <div class="dual-clock">
-                    <div class="clock-item" style="text-align: left;">
-                        <h4>JKT (WIB)</h4>
-                        <div id="clockIndo">--:--</div>
-                    </div>
-                    <div class="clock-item" style="text-align: right;">
-                        <h4>NYC (US)</h4>
-                        <div id="clockUS">--:--</div>
-                    </div>
-                </div>
-            </div>
-            <p class="text-center" style="margin-top: 15px; font-weight: bold; font-size: 0.9rem;">
-                // 21:00 – 02:00 WIB //
+    <div class="glass-container">
+        <div class="header">
+            <i class="fab fa-linkedin logo-icon"></i>
+            <h1>Rent Linkedin By Zen</h1>
+            <p class="subtitle">
+                Sewakan linkedinmu ke agen zen dan dapatkan pasive income mingguan 
+                <br><span class="highlight-candy">190rb!!!</span>
             </p>
-        </section>
+        </div>
 
-        <section class="card fade-in">
-            <h2 class="section-title">Rate Card</h2>
-            <div class="rate-interactive-box">
-                <div style="font-family: 'DM Mono'; margin-bottom: 5px; font-size: 0.8rem;">POTENSI CUAN:</div>
-                <div class="price-wrapper">
-                    <div id="dynamicPrice" class="rate-price">Rp 190.000</div>
-                    <div class="rate-unit">/ minggu</div>
+        <div class="info-section">
+            <div class="section-title">Kegunaan Akun</div>
+            <p class="info-text">
+                Akun digunakan oleh client untuk promosi digital dan push engagement di negara client.
+            </p>
+            <div class="promo-image-container">
+                <picture>
+                    <source srcset="promosi.webp" type="image/webp">
+                    <source srcset="promosi.png" type="image/png">
+                    <source srcset="promosi.jpg" type="image/jpeg">
+                    <img src="promosi.webp" alt="Ilustrasi Promosi" class="promo-image">
+                </picture>
+            </div>
+        </div>
+
+        <div class="section-title">Kriteria Akun Wajib</div>
+        <div class="content-box">
+            <div class="card-item">
+                <div class="icon-box bg-purple"><i class="fas fa-calendar-check"></i></div>
+                <div class="text-content">Pembuatan min Desember 2024</div>
+            </div>
+            <div class="card-item">
+                <div class="icon-box bg-blue"><i class="fas fa-users"></i></div>
+                <div class="text-content">Koneksi minimal 30</div>
+            </div>
+            <div class="card-item">
+                <div class="icon-box bg-pink"><i class="fas fa-ban"></i></div>
+                <div class="text-content">Bukan akun tuyulan atau beli</div>
+            </div>
+            <div class="card-item">
+                <div class="icon-box bg-yellow"><i class="fas fa-flag"></i></div>
+                <div class="text-content">Wajib Akun Indonesia</div>
+            </div>
+        </div>
+
+        <div class="section-title">Detail Rate Sewa</div>
+        <div class="content-box">
+            <div class="card-item">
+                <div class="icon-box bg-blue"><i class="fas fa-tag"></i></div>
+                <div class="text-content">Akun normal <b>190rb</b> / minggu</div>
+            </div>
+            <div class="card-item">
+                <div class="icon-box bg-green"><i class="fas fa-wrench"></i></div>
+                <div class="text-content">Bonus pemulihan akun <b>+80rb</b></div>
+            </div>
+        </div>
+
+        <div class="section-title">Skema Referral Baru!</div>
+        <div class="content-box">
+            <div class="card-item">
+                <div class="icon-box bg-pink"><i class="fas fa-user-friends"></i></div>
+                <div class="text-content flex-row-between">
+                    <span>2 Invite</span>
+                    <span class="referral-price">7 USD</span>
                 </div>
+            </div>
+            <div class="card-item">
+                <div class="icon-box bg-purple"><i class="fas fa-users"></i></div>
+                <div class="text-content flex-row-between">
+                    <span>4 Invite</span>
+                    <span class="referral-price">14 USD</span>
+                </div>
+            </div>
+            <div class="card-item special-gold">
+                <div class="icon-box bg-yellow"><i class="fas fa-gift"></i></div>
+                <div class="text-content">
+                    Berlaku <b>Kelipatan 2</b>
+                    <span class="sub-text">Terus dapatkan <b>7 USD</b> tanpa batas!</span>
+                </div>
+            </div>
+        </div>
 
-                <div class="gamification-bar-container">
-                    <div class="bar-bg">
-                        <div id="barFill" class="bar-fill" style="width: 70%;"></div>
+        <div class="section-title">Jadwal & Sistem</div>
+        <div class="content-box">
+            <div class="card-item" style="flex-direction: column; align-items: flex-start;">
+                <div style="display: flex; align-items: center; width: 100%;">
+                    <div class="icon-box bg-blue"><i class="fas fa-clock"></i></div>
+                    <div class="text-content">
+                        <div>Start sewa <b>Minggu - Jumat</b></div>
+                        <span class="sub-text">Jam 21:00 - 02:00 WIB</span>
                     </div>
-                    <div class="bar-labels">
-                        <span>BASIC</span>
-                        <span>BONUS UNLOCK</span>
+                </div>
+                
+                <div class="countdown-wrapper" id="countdownPanel">
+                    <div class="countdown-label">Open In</div>
+                    <div class="timer-row">
+                        <div class="time-box">
+                            <span class="time-num" id="cd-hours">00</span>
+                            <span class="time-unit">Jam</span>
+                        </div>
+                        <span class="colon">:</span>
+                        <div class="time-box">
+                            <span class="time-num" id="cd-minutes">00</span>
+                            <span class="time-unit">Mnt</span>
+                        </div>
+                        <span class="colon">:</span>
+                        <div class="time-box">
+                            <span class="time-num" id="cd-seconds">00</span>
+                            <span class="time-unit">Dtk</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="unlock-toggle-container">
-                    <label class="switch-label">
-                        <input type="checkbox" id="bonusToggle" onchange="toggleBonus()">
-                        <span class="slider"></span>
-                    </label>
-                    <div class="toggle-text">
-                        <strong>UNLOCK BONUS</strong>
-                        <span style="color: #666; font-size: 0.8rem;">Syarat: Lolos Banned</span>
-                    </div>
-                </div>
-
-                <div id="bonusMessage" class="bonus-alert">
-                    WOW! RATE NAIK JADI Rp 270.000!
-                </div>
             </div>
-        </section>
-
-        <section class="card fade-in">
-            <h2 class="section-title">Syarat</h2>
-            <ul class="check-list">
-                <li>Min. pembuatan Des 2024</li>
-                <li>Min. 30 koneksi</li>
-                <li>Region Indonesia</li>
-                <li>2FA wajib OFF</li>
-                <li>Real Human (No Bot)</li>
-            </ul>
-        </section>
-
-        <section class="card fade-in">
-            <h2 class="section-title" style="background: var(--danger);">Rules!!</h2>
-            <ul class="warn-list">
-                <li>Dilarang Nuyul</li>
-                <li>1 WA = 1 Akun</li>
-                <li>No GB Koneksi</li>
-                <li>Melanggar = BANNED</li>
-            </ul>
-        </section>
-
-        <section class="invite-card fade-in">
-            <div class="text-center" style="margin-bottom: 15px;">
-                <h2 style="color: white; text-decoration: underline; font-size: 1.5rem;">Event Invite</h2>
-                <p style="color: white; font-family: 'DM Mono'; font-size: 0.9rem;">Ajak teman = Cuan nambah</p>
-            </div>
-            <div class="invite-row"><span>1 TEMAN</span><span>Rp 32.000</span></div>
-            <div class="invite-row"><span>2 TEMAN</span><span>Rp 64.000</span></div>
-            <div class="invite-row"><span>3 TEMAN</span><span>Rp 98.000</span></div>
-            <div class="invite-row" style="background: black; padding: 10px; color: var(--accent); margin-top: 10px; border: 1px dashed white;">
-                <span>> 10 ORANG</span>
-                <span>Rp 48rb/org</span>
-            </div>
-        </section>
-
-        <section class="card fade-in">
-            <h2 class="section-title">Cara Sewa</h2>
-            <div style="padding-left: 5px;">
-                <p>1. Standby jam 21:00 WIB.</p>
-                <p>2. Admin share form start sewa.</p>
-                <p>3. Review -> Lolos -> Lock.</p>
-                <p>4. Gajian tiap Minggu.</p>
-            </div>
-        </section>
-
-        <section class="card fade-in">
-            <h2 class="section-title">Pembayaran</h2>
             
-            <div class="payment-grid">
-                <div class="pay-item"><svg viewBox="0 0 100 40"><text x="50%" y="65%" text-anchor="middle" font-weight="900" font-size="28" fill="#000" font-family="Arial">BCA</text></svg></div>
-                <div class="pay-item"><svg viewBox="0 0 100 40"><text x="50%" y="65%" text-anchor="middle" font-weight="900" font-size="20" fill="#000" font-family="Arial">MANDIRI</text></svg></div>
-                <div class="pay-item"><svg viewBox="0 0 100 40"><text x="50%" y="65%" text-anchor="middle" font-weight="900" font-size="24" fill="#000" font-family="Arial">BRI</text></svg></div>
-                <div class="pay-item"><svg viewBox="0 0 100 40"><text x="50%" y="65%" text-anchor="middle" font-weight="900" font-size="24" fill="#000" font-family="Arial">BNI</text></svg></div>
-                <div class="pay-item"><svg viewBox="0 0 100 40"><text x="50%" y="65%" text-anchor="middle" font-weight="900" font-size="22" fill="#000" font-family="Arial">DANA</text></svg></div>
-                <div class="pay-item"><svg viewBox="0 0 100 40"><text x="50%" y="65%" text-anchor="middle" font-weight="900" font-size="24" fill="#000" font-family="Arial">OVO</text></svg></div>
-                <div class="pay-item"><svg viewBox="0 0 100 40"><text x="50%" y="65%" text-anchor="middle" font-weight="900" font-size="22" fill="#000" font-family="Arial">GOPAY</text></svg></div>
-                <div class="pay-item"><svg viewBox="0 0 100 40"><text x="50%" y="65%" text-anchor="middle" font-weight="900" font-size="22" fill="#000" font-family="Arial">JAGO</text></svg></div>
-            </div>
-
-            <div class="marquee-wrapper">
-                <div class="marquee-container">
-                    <div class="marquee-content">
-                        BCA • MANDIRI • BRI • BNI • JAGO • SEABANK • DANA • OVO • GOPAY • SHOPEEPAY •  // CAIR SETIAP MINGGU // NO RIBET //  BCA • MANDIRI • BRI • BNI • JAGO • SEABANK • DANA • OVO • GOPAY • SHOPEEPAY
-                    </div>
+            <div class="card-item">
+                <div class="icon-box bg-green"><i class="fas fa-wallet"></i></div>
+                <div class="text-content">
+                    Pembayaran setiap <b>Minggu</b>
+                    <span class="sub-text">Jika tidak ada delay perusahaan</span>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <div class="text-center" style="font-family: 'DM Mono'; font-size: 0.75rem; margin-top: 30px; opacity: 0.7;">
-            Zen x 8800 // All Rights Reserved
+        <div class="alert-box">
+            <i class="fas fa-triangle-exclamation"></i>
+            <div class="alert-text">
+                Harap patuhi peraturan grup yang ada atau kami <b>KICK OUT</b>.
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button class="cta-btn" onclick="joinGrup()">
+                <i class="fab fa-whatsapp" style="font-size: 1.3em;"></i>
+                Join Grup Sewa
+            </button>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Zen Agency. Secure System.
         </div>
     </div>
 
-    <div class="cta-container">
-        <a href="https://chat.whatsapp.com/DxZ6sNwtLpKIIInRtCBoQ6?mode=gi_t" class="btn-cta">GABUNG GRUP SEWA</a>
-    </div>
-
     <script>
-        // Toggle Rate Card
-        function toggleBonus() {
-            const checkBox = document.getElementById("bonusToggle");
-            const priceText = document.getElementById("dynamicPrice");
-            const barFill = document.getElementById("barFill");
-            const message = document.getElementById("bonusMessage");
-
-            if (checkBox.checked) {
-                priceText.innerHTML = "Rp 270.000";
-                priceText.classList.add("bonus-active");
-                barFill.style.width = "100%";
-                barFill.style.backgroundColor = "var(--success)";
-                message.style.display = "block";
-            } else {
-                priceText.innerHTML = "Rp 190.000";
-                priceText.classList.remove("bonus-active");
-                barFill.style.width = "70%";
-                barFill.style.backgroundColor = "var(--primary)";
-                message.style.display = "none";
-            }
+        function joinGrup() {
+            const btn = document.querySelector('.cta-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Membuka WhatsApp...';
+            
+            setTimeout(() => {
+                window.location.href = "https://chat.whatsapp.com/DxZ6sNwtLpKIIInRtCBoQ6";
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 2000);
+            }, 1000);
         }
 
-        // Dashboard & Timer
-        function updateDashboard() {
+        function updateCountdown() {
             const now = new Date();
-            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const wibTime = new Date(utc + (3600000 * 7));
-            const nyTime = new Date(utc + (3600000 * -4)); 
+            let target = new Date();
+            target.setHours(21, 0, 0, 0);
 
-            document.getElementById('clockIndo').innerText = wibTime.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
-            document.getElementById('clockUS').innerText = nyTime.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit', hour12: true});
-
-            const hour = wibTime.getHours();
-            const day = wibTime.getDay(); 
-
-            let isOpen = false;
-            // Jadwal: Minggu(0) s.d Jumat(5), 21:00 - 02:00
-            if (hour >= 21 && day >= 0 && day <= 5) isOpen = true;
-            if (hour < 2 && day >= 1 && day <= 6) isOpen = true;
-
-            const timerEl = document.getElementById('mainTimer');
-            const badgeEl = document.getElementById('statusBadge');
-            const dotEl = document.getElementById('statusDot');
-            const textEl = document.getElementById('statusText');
-
-            if (isOpen) {
-                timerEl.innerText = "OPEN NOW";
-                timerEl.style.color = "var(--success)";
-                timerEl.style.fontSize = "2.2rem"; // Kecilkan dikit pas OPEN
-                badgeEl.style.color = "black";
-                badgeEl.style.background = "var(--success)";
-                textEl.innerText = "ONLINE";
-                dotEl.style.background = "black";
-                dotEl.classList.add('pulse-active');
-            } else {
-                timerEl.style.color = "var(--danger)";
-                badgeEl.style.color = "white";
-                badgeEl.style.background = "black";
-                textEl.innerText = "OFFLINE";
-                dotEl.style.background = "var(--danger)";
-                dotEl.classList.remove('pulse-active');
-
-                // Logic Hitung Mundur
-                let target = new Date(wibTime);
-                target.setHours(21, 0, 0, 0);
-                if (wibTime > target) target.setDate(target.getDate() + 1);
-                while (target.getDay() === 6) target.setDate(target.getDate() + 1);
-
-                const diff = target - wibTime;
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((diff % (1000 * 60)) / 1000);
-                timerEl.innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            if (now > target) {
+                target.setDate(target.getDate() + 1);
             }
+            if (target.getDay() === 6) { // Sabtu
+                target.setDate(target.getDate() + 1);
+            }
+
+            const diff = target - now;
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('cd-minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('cd-seconds').innerText = seconds.toString().padStart(2, '0');
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            setInterval(updateDashboard, 1000);
-            updateDashboard();
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('visible');
-                });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-        });
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
-
 </body>
 </html>
